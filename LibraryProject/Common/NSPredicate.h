@@ -11,7 +11,7 @@
 #import "Callbacks.h"
 
 // Class Methods 
-extern "C" void* d(
+extern "C" void* NSPredicate_predicateWithValue(
 	bool value,
     void** exception
     );
