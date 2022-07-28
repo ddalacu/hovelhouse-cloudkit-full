@@ -11,13 +11,15 @@
 #import "Callbacks.h"
 
 // Class Methods 
-extern "C" void* NSPredicate_predicateWithValue(
+extern "C" void* d(
 	bool value,
     void** exception
     );
 
 extern "C" void* NSPredicate_predicateWithFormat(
 	const char* predicateFormat,
+    void* params[],
+    long paramsCount,
     void** exception
     );
 

@@ -32,13 +32,19 @@ void* NSPredicate_predicateWithValue(
 }
 
 void* NSPredicate_predicateWithFormat(
-	const char* predicateFormat, 
+	const char* predicateFormat,
+    void* params[],
+    long paramsCount,
 	void** exception
     )
 {
 	@try {
-		NSLog(@"NSPredicate_predicateWithFormat()");
-	    NSPredicate* val = [NSPredicate predicateWithFormat:[NSString stringWithUTF8String:predicateFormat]];
+        
+        NSLog(@"NSPredicate_predicateWithFormat()");
+        
+        NSPredicate* val = [NSPredicate predicateWithFormat:[NSString stringWithUTF8String:predicateFormat]
+                                              argumentArray:[Converters BridgedArray:params withCount:paramsCount]];
+        
 		return (__bridge_retained void*) val;
 	}
 	@catch(NSException* ex)
