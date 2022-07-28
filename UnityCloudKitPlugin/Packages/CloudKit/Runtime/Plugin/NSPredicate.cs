@@ -44,14 +44,11 @@ namespace HovelHouse.CloudKit
         [DllImport(dll)]
         private static extern IntPtr NSPredicate_predicateWithFormat(
             string predicateFormat,
+            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysInt, SizeParamIndex = 2)]
+            IntPtr[] records,
+            int recordsCount,
             out IntPtr exceptionPtr);
-
         
-
-        
-
-        
-
         
 
         // Properties
@@ -94,11 +91,12 @@ namespace HovelHouse.CloudKit
         /// <param name="predicateFormat"></param>
         /// <returns>val</returns>
         public static NSPredicate PredicateWithFormat(
-            string predicateFormat)
-        { 
+            string predicateFormat, CKObject[] parameters = null)
+        {
+            var handles = parameters == null ? null : parameters.Select(x => HandleRef.ToIntPtr(x.Handle)).ToArray();
             
             var val = NSPredicate_predicateWithFormat(
-                predicateFormat, 
+                predicateFormat, handles, parameters == null ? 0 : parameters.Length,
                 out IntPtr exceptionPtr);
 
             if(exceptionPtr != IntPtr.Zero)
